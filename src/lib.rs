@@ -96,6 +96,12 @@ pub fn default_controller(instrument: &str) -> &'static str {
 // Response types
 // ---------------------------------------------------------------------------------------------
 
+/// Reads a field that the server may send as `null` (seen on charts with hidden metadata, whose
+/// `icon` is null) as its default, so one odd row can't fail a whole reply.
+fn nullable<'de, D: serde::Deserializer<'de>, T: Default + Deserialize<'de>>(d: D) -> Result<T, D::Error> {
+    Ok(Option::<T>::deserialize(d)?.unwrap_or_default())
+}
+
 /// One submitted score, as `/scores`, `/scores/latest-scores`, record progression and account
 /// pages give it. Times are ISO 8601 strings; durations are milliseconds.
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -103,62 +109,109 @@ pub fn default_controller(instrument: &str) -> &'static str {
 pub struct Score {
     /// Rank on the board asked for (1 = best). Only on `/scores` rows.
     pub placement: Option<u32>,
+    #[serde(deserialize_with = "nullable")]
     pub score_id: u64,
     /// The exact track played (one instrument + difficulty of one chart version).
+    #[serde(deserialize_with = "nullable")]
     pub track_hash: String,
     /// The chart as a whole (what the website's `/scores/{songHash}` pages use).
+    #[serde(deserialize_with = "nullable")]
     pub song_hash: String,
     /// When the server first saw the chart.
+    #[serde(deserialize_with = "nullable")]
     pub song_created_at: String,
+    #[serde(deserialize_with = "nullable")]
     pub name: String,
+    #[serde(deserialize_with = "nullable")]
     pub artist: String,
+    #[serde(deserialize_with = "nullable")]
     pub album: String,
+    #[serde(deserialize_with = "nullable")]
     pub genre: String,
+    #[serde(deserialize_with = "nullable")]
     pub year: String,
+    #[serde(deserialize_with = "nullable")]
     pub charter: String,
     /// Source icon key ("rb1", "ghm", a charter's own…).
+    #[serde(deserialize_with = "nullable")]
     pub icon: String,
     /// Song length, ms.
+    #[serde(deserialize_with = "nullable")]
     pub duration: u64,
     /// When this score was submitted.
+    #[serde(deserialize_with = "nullable")]
     pub created_at: String,
+    #[serde(deserialize_with = "nullable")]
     pub account_id: u64,
+    #[serde(deserialize_with = "nullable")]
     pub username: String,
+    #[serde(deserialize_with = "nullable")]
     pub controller_type: String,
+    #[serde(deserialize_with = "nullable")]
     pub instrument: String,
+    #[serde(deserialize_with = "nullable")]
     pub difficulty: String,
+    #[serde(deserialize_with = "nullable")]
     pub modifiers: Vec<String>,
     /// Song speed, percent (100 = normal).
+    #[serde(deserialize_with = "nullable")]
     pub speed: u32,
+    #[serde(deserialize_with = "nullable")]
     pub is_fc: bool,
+    #[serde(deserialize_with = "nullable")]
     pub is_pfc: bool,
+    #[serde(deserialize_with = "nullable")]
     pub has_previous_fc: bool,
+    #[serde(deserialize_with = "nullable")]
     pub has_previous_pfc: bool,
+    #[serde(deserialize_with = "nullable")]
     pub failed_in_run: bool,
+    #[serde(deserialize_with = "nullable")]
     pub base_score: i64,
+    #[serde(deserialize_with = "nullable")]
     pub total_score: i64,
+    #[serde(deserialize_with = "nullable")]
     pub solo_score: i64,
+    #[serde(deserialize_with = "nullable")]
     pub note_score: i64,
+    #[serde(deserialize_with = "nullable")]
     pub ghost_score: i64,
+    #[serde(deserialize_with = "nullable")]
     pub sustain_score: i64,
+    #[serde(deserialize_with = "nullable")]
     pub combo_score: i64,
+    #[serde(deserialize_with = "nullable")]
     pub stars: u8,
+    #[serde(deserialize_with = "nullable")]
     pub sp_score: i64,
+    #[serde(deserialize_with = "nullable")]
     pub sp_phrase_count: u32,
+    #[serde(deserialize_with = "nullable")]
     pub sp_phrases_hit: u32,
     /// Time spent in Star Power, ms.
+    #[serde(deserialize_with = "nullable")]
     pub time_in_sp: u64,
+    #[serde(deserialize_with = "nullable")]
     pub notes_hit: u32,
+    #[serde(deserialize_with = "nullable")]
     pub note_count: u32,
     /// As the server gives it: "99.8". Read it with [`Score::accuracy_pct`].
     pub accuracy: Option<String>,
+    #[serde(deserialize_with = "nullable")]
     pub max_combo: u32,
+    #[serde(deserialize_with = "nullable")]
     pub excess_hits: u32,
+    #[serde(deserialize_with = "nullable")]
     pub ghost_inputs: u32,
+    #[serde(deserialize_with = "nullable")]
     pub ghosts_hit: u32,
+    #[serde(deserialize_with = "nullable")]
     pub ghost_note_count: u32,
+    #[serde(deserialize_with = "nullable")]
     pub accents_hit: u32,
+    #[serde(deserialize_with = "nullable")]
     pub accent_note_count: u32,
+    #[serde(deserialize_with = "nullable")]
     pub squeezes: u32,
 }
 
@@ -173,18 +226,30 @@ impl Score {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct Song {
+    #[serde(deserialize_with = "nullable")]
     pub song_hash: String,
+    #[serde(deserialize_with = "nullable")]
     pub track_hash: String,
+    #[serde(deserialize_with = "nullable")]
     pub song_created_at: String,
+    #[serde(deserialize_with = "nullable")]
     pub name: String,
+    #[serde(deserialize_with = "nullable")]
     pub artist: String,
+    #[serde(deserialize_with = "nullable")]
     pub album: String,
+    #[serde(deserialize_with = "nullable")]
     pub genre: String,
+    #[serde(deserialize_with = "nullable")]
     pub year: String,
+    #[serde(deserialize_with = "nullable")]
     pub charter: String,
+    #[serde(deserialize_with = "nullable")]
     pub icon: String,
+    #[serde(deserialize_with = "nullable")]
     pub duration: u64,
     /// "approved", …
+    #[serde(deserialize_with = "nullable")]
     pub metadata_approval_status: String,
 }
 
@@ -195,10 +260,13 @@ pub struct Summary {
     /// Only filled in when asked by `songHash`; `None` for `trackHash`.
     pub song: Option<Song>,
     /// Scores on the board as filtered (controller, speed, modifiers).
+    #[serde(deserialize_with = "nullable")]
     pub submission_count: u64,
     /// Plays of the track over every filter.
+    #[serde(deserialize_with = "nullable")]
     pub total_play_count: u64,
     /// Players of the track over every filter.
+    #[serde(deserialize_with = "nullable")]
     pub total_player_count: u64,
     /// Banner art key of the board's leader.
     pub hero_banner_key: Option<String>,
@@ -209,7 +277,9 @@ pub struct Summary {
 #[serde(default, rename_all = "camelCase")]
 pub struct Section {
     /// Places before the first row (so its placement is `position_offset + 1`).
+    #[serde(deserialize_with = "nullable")]
     pub position_offset: u64,
+    #[serde(deserialize_with = "nullable")]
     pub score_data: Vec<Score>,
 }
 
@@ -217,7 +287,9 @@ pub struct Section {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct Scores {
+    #[serde(deserialize_with = "nullable")]
     pub summary: Summary,
+    #[serde(deserialize_with = "nullable")]
     pub top: Section,
     /// The rows around `accountId`'s score: only when one was asked for, the account has a
     /// score on the board, and it isn't already in `top`.
@@ -228,23 +300,40 @@ pub struct Scores {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct BriefScore {
+    #[serde(deserialize_with = "nullable")]
     pub username: String,
+    #[serde(deserialize_with = "nullable")]
     pub is_fc: bool,
+    #[serde(deserialize_with = "nullable")]
     pub is_pfc: bool,
+    #[serde(deserialize_with = "nullable")]
     pub has_previous_fc: bool,
+    #[serde(deserialize_with = "nullable")]
     pub has_previous_pfc: bool,
+    #[serde(deserialize_with = "nullable")]
     pub failed_in_run: bool,
+    #[serde(deserialize_with = "nullable")]
     pub total_score: i64,
+    #[serde(deserialize_with = "nullable")]
     pub stars: u8,
+    #[serde(deserialize_with = "nullable")]
     pub notes_hit: u32,
+    #[serde(deserialize_with = "nullable")]
     pub note_count: u32,
     pub accuracy: Option<String>,
+    #[serde(deserialize_with = "nullable")]
     pub max_combo: u32,
+    #[serde(deserialize_with = "nullable")]
     pub excess_hits: u32,
+    #[serde(deserialize_with = "nullable")]
     pub ghost_inputs: u32,
+    #[serde(deserialize_with = "nullable")]
     pub ghosts_hit: u32,
+    #[serde(deserialize_with = "nullable")]
     pub ghost_note_count: u32,
+    #[serde(deserialize_with = "nullable")]
     pub accents_hit: u32,
+    #[serde(deserialize_with = "nullable")]
     pub accent_note_count: u32,
 }
 
@@ -252,16 +341,22 @@ pub struct BriefScore {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct Filters {
+    #[serde(deserialize_with = "nullable")]
     pub states: Vec<FilterState>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct FilterState {
+    #[serde(deserialize_with = "nullable")]
     pub instrument: String,
+    #[serde(deserialize_with = "nullable")]
     pub difficulty: String,
+    #[serde(deserialize_with = "nullable")]
     pub controller_type: String,
+    #[serde(deserialize_with = "nullable")]
     pub speed: u32,
+    #[serde(deserialize_with = "nullable")]
     pub modifiers: Vec<String>,
 }
 
@@ -270,13 +365,18 @@ pub struct FilterState {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct DurationStats {
+    #[serde(deserialize_with = "nullable")]
     pub total_visible_scores: u32,
+    #[serde(deserialize_with = "nullable")]
     pub segment_count: u32,
     /// Notes missed in each slice, summed over scores.
+    #[serde(deserialize_with = "nullable")]
     pub missed_note_counts: Vec<u32>,
     /// Scores that had failed by the end of each slice (running total).
+    #[serde(deserialize_with = "nullable")]
     pub failed_counts: Vec<u32>,
     /// Scores still on a full combo at each slice (falls as combos break).
+    #[serde(deserialize_with = "nullable")]
     pub fc_streak_counts: Vec<u32>,
 }
 
@@ -284,15 +384,20 @@ pub struct DurationStats {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct RecordProgression {
+    #[serde(deserialize_with = "nullable")]
     pub points: Vec<RecordPoint>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct RecordPoint {
+    #[serde(deserialize_with = "nullable")]
     pub created_at: String,
+    #[serde(deserialize_with = "nullable")]
     pub username: String,
+    #[serde(deserialize_with = "nullable")]
     pub total_score: i64,
+    #[serde(deserialize_with = "nullable")]
     pub score: Score,
 }
 
@@ -300,9 +405,12 @@ pub struct RecordPoint {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct PlayerRank {
+    #[serde(deserialize_with = "nullable")]
     pub account_id: u64,
+    #[serde(deserialize_with = "nullable")]
     pub username: String,
     /// The metric asked for (hours for "hoursPlayed").
+    #[serde(deserialize_with = "nullable")]
     pub value: u64,
 }
 
@@ -310,9 +418,13 @@ pub struct PlayerRank {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct SongRank {
+    #[serde(deserialize_with = "nullable")]
     pub song_hash: String,
+    #[serde(deserialize_with = "nullable")]
     pub name: String,
+    #[serde(deserialize_with = "nullable")]
     pub artist: String,
+    #[serde(deserialize_with = "nullable")]
     pub plays: u64,
 }
 
@@ -320,13 +432,21 @@ pub struct SongRank {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct SiteTotals {
+    #[serde(deserialize_with = "nullable")]
     pub users: u64,
+    #[serde(deserialize_with = "nullable")]
     pub submissions: u64,
+    #[serde(deserialize_with = "nullable")]
     pub songs: u64,
+    #[serde(deserialize_with = "nullable")]
     pub notes_hit: u64,
+    #[serde(deserialize_with = "nullable")]
     pub fcs: u64,
+    #[serde(deserialize_with = "nullable")]
     pub pfcs: u64,
+    #[serde(deserialize_with = "nullable")]
     pub hours_played: u64,
+    #[serde(deserialize_with = "nullable")]
     pub total_score: u64,
 }
 
@@ -334,27 +454,40 @@ pub struct SiteTotals {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct Profile {
+    #[serde(deserialize_with = "nullable")]
     pub account_id: u64,
+    #[serde(deserialize_with = "nullable")]
     pub username: String,
+    #[serde(deserialize_with = "nullable")]
     pub created_at: String,
     pub pronouns: Option<String>,
     /// "provider" (picture from a linked sign-in) or "default".
+    #[serde(deserialize_with = "nullable")]
     pub avatar_source_type: String,
     /// The provider ("discord", "google") or default avatar ("default-blue").
+    #[serde(deserialize_with = "nullable")]
     pub avatar_source_key: String,
     pub profile_picture_url: Option<String>,
     pub title_key: Option<String>,
     pub flair_key: Option<String>,
     pub banner_key: Option<String>,
+    #[serde(deserialize_with = "nullable")]
     pub submission_count: u64,
+    #[serde(deserialize_with = "nullable")]
     pub stats: ProfileStats,
+    #[serde(deserialize_with = "nullable")]
     pub ranks: ProfileRanks,
+    #[serde(deserialize_with = "nullable")]
     pub top_artists: Vec<ArtistPlays>,
+    #[serde(deserialize_with = "nullable")]
     pub top_instruments: Vec<InstrumentPlays>,
     /// Newest first (15 seen).
+    #[serde(deserialize_with = "nullable")]
     pub latest_submissions: Vec<Score>,
+    #[serde(deserialize_with = "nullable")]
     pub most_played: Vec<SongPlays>,
     /// Seen empty; assumed to hold scores like `latest_submissions`.
+    #[serde(deserialize_with = "nullable")]
     pub top_submissions: Vec<Score>,
     pub deleted_at: Option<String>,
 }
@@ -362,13 +495,21 @@ pub struct Profile {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct ProfileStats {
+    #[serde(deserialize_with = "nullable")]
     pub total_pfcs: u64,
+    #[serde(deserialize_with = "nullable")]
     pub total_fcs: u64,
+    #[serde(deserialize_with = "nullable")]
     pub total_score: u64,
+    #[serde(deserialize_with = "nullable")]
     pub songs_played: u64,
+    #[serde(deserialize_with = "nullable")]
     pub total_time_played_ms: u64,
+    #[serde(deserialize_with = "nullable")]
     pub notes_hit: u64,
+    #[serde(deserialize_with = "nullable")]
     pub total_stars_earned: u64,
+    #[serde(deserialize_with = "nullable")]
     pub highest_combo: u64,
 }
 
@@ -389,24 +530,33 @@ pub struct ProfileRanks {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct ArtistPlays {
+    #[serde(deserialize_with = "nullable")]
     pub artist: String,
+    #[serde(deserialize_with = "nullable")]
     pub plays: u64,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct InstrumentPlays {
+    #[serde(deserialize_with = "nullable")]
     pub instrument: String,
+    #[serde(deserialize_with = "nullable")]
     pub plays: u64,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct SongPlays {
+    #[serde(deserialize_with = "nullable")]
     pub song_hash: String,
+    #[serde(deserialize_with = "nullable")]
     pub name: String,
+    #[serde(deserialize_with = "nullable")]
     pub artist: String,
+    #[serde(deserialize_with = "nullable")]
     pub charter: String,
+    #[serde(deserialize_with = "nullable")]
     pub plays: u64,
 }
 
@@ -414,10 +564,14 @@ pub struct SongPlays {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct AccountScores {
+    #[serde(deserialize_with = "nullable")]
     pub scores: Vec<Score>,
     /// Rows over every page, for the filters given.
+    #[serde(deserialize_with = "nullable")]
     pub total_count: u64,
+    #[serde(deserialize_with = "nullable")]
     pub page: u32,
+    #[serde(deserialize_with = "nullable")]
     pub page_size: u32,
 }
 
@@ -432,12 +586,19 @@ impl AccountScores {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct SongHit {
+    #[serde(deserialize_with = "nullable")]
     pub song_hash: String,
+    #[serde(deserialize_with = "nullable")]
     pub name: String,
+    #[serde(deserialize_with = "nullable")]
     pub artist: String,
+    #[serde(deserialize_with = "nullable")]
     pub charter: String,
+    #[serde(deserialize_with = "nullable")]
     pub icon: String,
+    #[serde(deserialize_with = "nullable")]
     pub play_count: u64,
+    #[serde(deserialize_with = "nullable")]
     pub player_count: u64,
 }
 
@@ -445,9 +606,13 @@ pub struct SongHit {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct UserHit {
+    #[serde(deserialize_with = "nullable")]
     pub account_id: u64,
+    #[serde(deserialize_with = "nullable")]
     pub username: String,
+    #[serde(deserialize_with = "nullable")]
     pub avatar_source_type: String,
+    #[serde(deserialize_with = "nullable")]
     pub avatar_source_key: String,
     pub profile_picture_url: Option<String>,
 }
@@ -456,8 +621,11 @@ pub struct UserHit {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct QuickSearch {
+    #[serde(deserialize_with = "nullable")]
     pub query: String,
+    #[serde(deserialize_with = "nullable")]
     pub songs: Vec<SongHit>,
+    #[serde(deserialize_with = "nullable")]
     pub users: Vec<UserHit>,
 }
 
@@ -465,13 +633,18 @@ pub struct QuickSearch {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct Search {
+    #[serde(deserialize_with = "nullable")]
     pub query: String,
+    #[serde(deserialize_with = "nullable")]
     pub found_songs: u64,
+    #[serde(deserialize_with = "nullable")]
     pub found_users: u64,
     /// `None` on the last page.
     pub next_songs_page: Option<u32>,
     pub next_users_page: Option<u32>,
+    #[serde(deserialize_with = "nullable")]
     pub songs: Vec<SongHit>,
+    #[serde(deserialize_with = "nullable")]
     pub users: Vec<UserHit>,
 }
 
@@ -479,7 +652,9 @@ pub struct Search {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
 pub struct Banner {
+    #[serde(deserialize_with = "nullable")]
     pub enabled: bool,
+    #[serde(deserialize_with = "nullable")]
     pub message: String,
 }
 
@@ -488,8 +663,11 @@ pub struct Banner {
 #[serde(default, rename_all = "camelCase")]
 pub struct ApiError {
     /// "AJV_VALIDATION_ERROR", "NOT_FOUND", "UNAUTHORIZED", …
+    #[serde(deserialize_with = "nullable")]
     pub name: String,
+    #[serde(deserialize_with = "nullable")]
     pub message: String,
+    #[serde(deserialize_with = "nullable")]
     pub status: u16,
 }
 

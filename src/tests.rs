@@ -112,6 +112,22 @@ fn account_scores_paging() {
     assert!(exact.is_last_page());
 }
 
+/// Charts with hidden metadata come back with asterisks for their details and `"icon": null`;
+/// one such row mustn't fail the whole page.
+#[test]
+fn nulls_read_as_defaults() {
+    let a: AccountScores = parse(sample!("account_scores_hidden_metadata")).unwrap();
+    let hidden = &a.scores[0];
+    assert_eq!((hidden.icon.as_str(), hidden.album.as_str(), hidden.squeezes), ("", "", 0));
+    assert_eq!(hidden.name, "********");
+    assert_eq!((hidden.total_score, hidden.accuracy_pct()), (210000, Some(94.7)));
+    assert_eq!(a.scores[1].icon, "rb1");
+    let b: BriefScore = parse(br#"{"username": null, "totalScore": null, "accuracy": null}"#).unwrap();
+    assert_eq!((b.username.as_str(), b.total_score, b.accuracy), ("", 0, None));
+    let p: Profile = parse(br#"{"username": "x", "stats": null, "topArtists": null, "latestSubmissions": [{"icon": null}]}"#).unwrap();
+    assert!(p.top_artists.is_empty() && p.latest_submissions[0].icon.is_empty());
+}
+
 #[test]
 fn search() {
     let q: QuickSearch = parse(sample!("search_quick")).unwrap();
@@ -215,6 +231,14 @@ async fn client_against_local_server() {
     assert_eq!(seen[0], "GET /v1/account/42/scores?page=1&bestPerChart=true HTTP/1.1");
     assert_eq!(seen[1], "GET /v1/account/42/scores?page=2&bestPerChart=true HTTP/1.1");
     assert_eq!(seen[2], "GET /v1/account/42/profile HTTP/1.1");
+}
+
+/// Parses a saved `/account/{id}/scores` reply: `CHLB_TEST_FILE=<file.json> cargo test saved_file`.
+#[test]
+fn saved_file() {
+    let Ok(path) = std::env::var("CHLB_TEST_FILE") else { return };
+    let a: AccountScores = parse(&std::fs::read(path).unwrap()).unwrap();
+    println!("{} rows, {} with no icon", a.scores.len(), a.scores.iter().filter(|s| s.icon.is_empty()).count());
 }
 
 /// A few real requests, gently. Run with `CHLB_TEST_LIVE=1 cargo test live -- --nocapture`;

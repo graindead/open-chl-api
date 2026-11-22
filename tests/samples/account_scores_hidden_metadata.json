@@ -1,0 +1,10 @@
+{"scores": [
+ {"scoreId": 4000001, "trackHash": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "songHash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+  "songCreatedAt": "2026-06-01T00:00:00.000Z", "name": "********", "artist": "******", "album": null, "genre": "*****",
+  "year": "****", "charter": "*******", "icon": null, "duration": 241000, "createdAt": "2026-06-02T00:00:00.000Z",
+  "accountId": 1000, "username": "You", "controllerType": "5Fret", "instrument": "guitar", "difficulty": "expert",
+  "modifiers": [], "speed": 100, "isFc": false, "isPfc": false, "hasPreviousFc": false, "hasPreviousPfc": false,
+  "failedInRun": false, "baseScore": 50000, "totalScore": 210000, "stars": 5, "notesHit": 900, "noteCount": 950,
+  "accuracy": "94.7", "maxCombo": 300, "squeezes": null},
+ {"scoreId": 4000002, "name": "Fine", "artist": "Row", "icon": "rb1", "totalScore": 1}],
+ "totalCount": 2, "page": 1, "pageSize": 50}
