@@ -1,0 +1,118 @@
+{
+ "accountId": 1000,
+ "username": "You",
+ "createdAt": "2025-01-01T00:00:00.000Z",
+ "pronouns": null,
+ "avatarSourceType": "provider",
+ "avatarSourceKey": "discord",
+ "profilePictureUrl": null,
+ "titleKey": null,
+ "flairKey": "guitar-player",
+ "bannerKey": "Grains",
+ "submissionCount": 1315,
+ "stats": {
+  "totalPfcs": 183,
+  "totalFcs": 183,
+  "totalScore": 394639667,
+  "songsPlayed": 793,
+  "totalTimePlayedMs": 328150656,
+  "notesHit": 2274236,
+  "totalStarsEarned": 5182,
+  "highestCombo": 4619
+ },
+ "ranks": {
+  "totalScore": 203,
+  "submissions": 334,
+  "totalFcs": 338,
+  "totalPfcs": 333,
+  "hoursPlayed": 390,
+  "starsEarned": 258,
+  "notesHit": 231
+ },
+ "topArtists": [
+  {
+   "artist": "Infant Annihilator",
+   "plays": 41
+  },
+  {
+   "artist": "Rings of Saturn",
+   "plays": 41
+  }
+ ],
+ "topInstruments": [
+  {
+   "instrument": "guitar",
+   "plays": 1315
+  }
+ ],
+ "latestSubmissions": [
+  {
+   "scoreId": 5165448,
+   "trackHash": "2-ZLfFp4ebg6zu4L-899Eutr4e7hbySQ-zXPXr9Ca9w",
+   "songHash": "-lZjoNlF0KfhxPb4gZNOKrxi2thyQhbAE6w88wnJkGs",
+   "songCreatedAt": "2026-11-21T10:01:28.908Z",
+   "name": "Braindead",
+   "artist": "Lost Society",
+   "album": "Scion A/V Presents: Skybound",
+   "genre": "Thrash Metal",
+   "year": "2016",
+   "charter": "Miscellany",
+   "icon": "scu",
+   "duration": 289471,
+   "createdAt": "2026-11-22T10:39:49.629Z",
+   "accountId": 1000,
+   "username": "You",
+   "controllerType": "5Fret",
+   "instrument": "guitar",
+   "difficulty": "expert",
+   "modifiers": [],
+   "speed": 125,
+   "isFc": false,
+   "isPfc": false,
+   "hasPreviousFc": false,
+   "hasPreviousPfc": false,
+   "failedInRun": false,
+   "baseScore": 113186,
+   "totalScore": 439401,
+   "soloScore": 47360,
+   "noteScore": 104350,
+   "ghostScore": 1884,
+   "sustainScore": 4596,
+   "comboScore": 221340,
+   "stars": 5,
+   "spScore": 59871,
+   "spPhraseCount": 17,
+   "spPhrasesHit": 15,
+   "timeInSp": 31309,
+   "notesHit": 1491,
+   "noteCount": 1546,
+   "accuracy": "96.4",
+   "maxCombo": 361,
+   "excessHits": 39,
+   "ghostInputs": 18,
+   "ghostsHit": 0,
+   "ghostNoteCount": 0,
+   "accentsHit": 0,
+   "accentNoteCount": 0,
+   "squeezes": 1
+  }
+ ],
+ "mostPlayed": [
+  {
+   "songHash": "BRmBhkHtjTOeO6Ja2CMMWAwy8B8Hp5D9FyrLucjp1gA",
+   "name": "Diddy Kong Racing Theme",
+   "artist": "David Wise",
+   "charter": "JoeyD",
+   "plays": 17
+  },
+  {
+   "songHash": "3E-Rfm12xemZ9Ofl1IbgTMrKIwYkWT5wRXqZ9MkfGSc",
+   "name": "Esoteric Surgery",
+   "artist": "Gojira",
+   "charter": "Roadsounder99",
+   "plays": 9
+  }
+ ],
+ "topSubmissions": [],
+ "deletedAt": null
+}

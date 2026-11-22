@@ -1,0 +1,6 @@
+{
+ "name": "NOT_FOUND",
+ "message": "Account with id \"999999999\" not found.",
+ "status": 404,
+ "errors": []
+}

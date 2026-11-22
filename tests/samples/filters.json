@@ -1,0 +1,36 @@
+{
+ "states": [
+  {
+   "instrument": "guitar",
+   "difficulty": "expert",
+   "controllerType": "5Fret",
+   "speed": 100,
+   "modifiers": []
+  },
+  {
+   "instrument": "guitar",
+   "difficulty": "expert",
+   "controllerType": "5Fret",
+   "speed": 100,
+   "modifiers": [
+    "allTaps"
+   ]
+  },
+  {
+   "instrument": "guitar",
+   "difficulty": "expert",
+   "controllerType": "Gamepad",
+   "speed": 100,
+   "modifiers": []
+  },
+  {
+   "instrument": "guitar",
+   "difficulty": "expert",
+   "controllerType": "Gamepad",
+   "speed": 100,
+   "modifiers": [
+    "allTaps"
+   ]
+  }
+ ]
+}

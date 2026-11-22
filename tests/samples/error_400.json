@@ -1,0 +1,28 @@
+{
+ "name": "AJV_VALIDATION_ERROR",
+ "message": "Bad request on parameter \"request.query\".\nGetPlayerLeaderboardModel.metric must be equal to one of the allowed values. Given value: \"x\"",
+ "status": 400,
+ "errors": [
+  {
+   "instancePath": "/metric",
+   "schemaPath": "#/properties/metric/enum",
+   "keyword": "enum",
+   "params": {
+    "allowedValues": [
+     "totalScore",
+     "submissions",
+     "totalFcs",
+     "totalPfcs",
+     "hoursPlayed",
+     "starsEarned",
+     "notesHit"
+    ]
+   },
+   "message": "must be equal to one of the allowed values",
+   "data": "x",
+   "modelName": "GetPlayerLeaderboardModel",
+   "dataPath": ".metric",
+   "requestPath": "query"
+  }
+ ]
+}

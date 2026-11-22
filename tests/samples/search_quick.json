@@ -1,0 +1,32 @@
+{
+ "query": "sandman",
+ "songs": [
+  {
+   "songHash": "HrOuPeqOi1hKwYuELSMSsFIo63syfQ4DfYJYK5WwSpo",
+   "name": "Enter Sandman",
+   "artist": "Metallica",
+   "charter": "Harmonix",
+   "icon": "rb1",
+   "playCount": 3796,
+   "playerCount": 2103
+  },
+  {
+   "songHash": "bfKd-mnvEpRy4aDVk5w38lefJ9I9VcPkzxXXqxhTETQ",
+   "name": "Enter Sandman",
+   "artist": "Metallica",
+   "charter": "Neversoft",
+   "icon": "ghm",
+   "playCount": 3492,
+   "playerCount": 2053
+  }
+ ],
+ "users": [
+  {
+   "accountId": 76050,
+   "username": "Sandman",
+   "avatarSourceType": "default",
+   "avatarSourceKey": "default-blue",
+   "profilePictureUrl": null
+  }
+ ]
+}

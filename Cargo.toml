@@ -1,0 +1,20 @@
+[package]
+name = "clonehero-leaderboard"
+version = "0.1.0"
+edition = "2024"
+description = "Unofficial read-only client for Clone Hero's leaderboard API (api.clonehero.net)"
+license = "GPL-3.0"
+repository = "https://github.com/graindead/clonehero-leaderboard"
+keywords = ["clone-hero", "leaderboard", "rhythm-game"]
+
+[dependencies]
+# No TLS backend chosen here: the caller hands over its own reqwest::Client, already set up.
+reqwest = { version = "0.13", default-features = false, features = ["json", "query"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "net", "io-util"] }
+# For the tests' client: rustls with ring, the same TLS setup Truss uses.
+reqwest = { version = "0.13", default-features = false, features = ["rustls-no-provider", "http2", "json", "query"] }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }

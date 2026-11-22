@@ -1,0 +1,6 @@
+{
+ "name": "UNAUTHORIZED",
+ "message": "Authorization header not provided.",
+ "status": 401,
+ "errors": []
+}
