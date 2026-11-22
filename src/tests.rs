@@ -225,7 +225,7 @@ async fn live() {
         return;
     }
     let _ = rustls::crypto::ring::default_provider().install_default();
-    let http = reqwest::Client::builder().user_agent("clonehero-leaderboard-tests").build().unwrap();
+    let http = reqwest::Client::builder().user_agent("open-chl-api-tests").build().unwrap();
     let api = Api::new(http);
     let pause = || tokio::time::sleep(std::time::Duration::from_millis(500));
 

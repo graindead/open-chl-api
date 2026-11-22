@@ -11,8 +11,8 @@
 //!
 //! ```no_run
 //! # async fn demo(http: reqwest::Client) -> Result<(), String> {
-//! let api = clonehero_leaderboard::Api::new(http);
-//! let q = clonehero_leaderboard::ScoresQuery::track("-Nku724NgARbyAgbfSHvqhPBeskhr5rF-m_FTuv9B5s", "guitar", "expert")
+//! let api = open_chl_api::Api::new(http);
+//! let q = open_chl_api::ScoresQuery::track("-Nku724NgARbyAgbfSHvqhPBeskhr5rF-m_FTuv9B5s", "guitar", "expert")
 //!     .speed(100)
 //!     .top(50);
 //! let board = api.scores(&q).await?;

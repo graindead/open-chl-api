@@ -1,4 +1,4 @@
-# clonehero-leaderboard
+# open-chl-api
 
 An unofficial, read-only Rust client for Clone Hero's leaderboard API
 (`https://api.clonehero.net/v1`), the server behind <https://leaderboards.clonehero.net> and the
@@ -9,7 +9,7 @@ describes every public read endpoint as it was mapped (parameters, allowed value
 paging, errors). It can change at any time, so the response types are lenient.
 
 ```rust
-use clonehero_leaderboard::{Api, ScoresQuery, AccountScoresQuery};
+use open_chl_api::{Api, ScoresQuery, AccountScoresQuery};
 
 let api = Api::new(reqwest::Client::new()); // bring your own client (TLS, user agent, timeouts)
 

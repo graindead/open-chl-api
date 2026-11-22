@@ -1,10 +1,10 @@
 [package]
-name = "clonehero-leaderboard"
+name = "open-chl-api"
 version = "0.1.0"
 edition = "2024"
 description = "Unofficial read-only client for Clone Hero's leaderboard API (api.clonehero.net)"
 license = "GPL-3.0"
-repository = "https://github.com/graindead/clonehero-leaderboard"
+repository = "https://github.com/graindead/open-chl-api"
 keywords = ["clone-hero", "leaderboard", "rhythm-game"]
 
 [dependencies]
